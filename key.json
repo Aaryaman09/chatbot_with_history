@@ -5,5 +5,6 @@
     "LANGCHAIN_PROJECT_NAME": "Chatbot_with_History",
     "GROQ_API_KEY": "",
     "llm_service":"free" ,
-    "chat_session_id": "chat_session_1"
+    "chat_session_id": "chat_session_1",
+    "language":"english"
 }
