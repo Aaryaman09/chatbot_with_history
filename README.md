@@ -1,5 +1,3 @@
-# :
-
 # 🧠 Chatbot with Persistent Memory using Ollama
 A lightweight chatbot built using Ollama with ChatMessageHistory to maintain context and persist conversation history.
 
