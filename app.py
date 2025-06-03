@@ -25,19 +25,26 @@ class ChatBotOllama:
         return self.store[session_id]
 
     def fetch_message_history_runnable(self):
-        # fetching the LLM from utils
+        """
+        Fetch a runnable that can handle message history for the chatbot.
+        """
 
+        # Create a prompt template with a system message and a placeholder for user messages
         prompt = ChatPromptTemplate.from_messages([
             ("system", "You are a helpful assistant. Answer the user's questions to the best of your ability in language : {language}."),
             MessagesPlaceholder(variable_name="messages"),
         ])
 
+        # Fetching the LLM
         llm, model_name = fetch_llm(self.pass_keys["llm_service"], self.pass_keys.get("GROQ_API_KEY"))
 
+        # Create the chain with the prompt and LLM
         chain = prompt | llm
 
+        # Create a RunnableWithMessageHistory to handle message history
         with_message_history = RunnableWithMessageHistory(chain, self.get_session_history, input_messages_key="messages")
 
+        # return the runnable and model name
         return with_message_history, model_name
 
 if __name__ == "__main__":
@@ -46,7 +53,7 @@ if __name__ == "__main__":
     print(f"Welcome to the ChatBot : {model_name}! Type 'exit' to quit.")
 
     while True:
-        user_input = input("You: ")
+        user_input = input("\nYou: ")
         if user_input.lower() == "exit":
             break
 
@@ -65,6 +72,6 @@ if __name__ == "__main__":
             },
             config=configuration
         )
-        print("Assistant:", response.content)
+        print("\nAssistant: ", response.content)
 
         del key_config
